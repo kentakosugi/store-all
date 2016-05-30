@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="./template.xhtml">
+		<ui:define name="body">
+			<h:form id="cart">
+				<!-- 商品の詳細 -->
+				<div id="center">
+					<h:outputText class="" value="カートに以下の商品が追加されました。"></h:outputText>
+				</div>
+				
+				<p:spacer height="20"></p:spacer>
+
+				<!-- PanelGridの表示 -->
+				<p:panelGrid columns="1" styleClass="center">
+					<f:facet name="header">
+						<h:outputText value="商品の詳細"></h:outputText>
+					</f:facet>
+					<p:row>
+						<p:column rowpan="2">
+							<p:graphicImage name="#{cartView.orderLine.book.id}.jpg"
+								library="images" width="100"></p:graphicImage>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="タイトル:"></h:outputText>
+							<h:outputText value="#{cartView.orderLine.book.title}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="購入数:"></h:outputText>
+							<h:outputText value="#{cartView.orderLine.count}冊"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="金額:"></h:outputText>
+							<h:outputText value="#{cartView.total()}円"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:commandButton value="ショッピングを続ける"
+							action="#{cartView.shopping()}" ajax="false"></p:commandButton>
+						<p:commandButton value="購入手続きを進める" action="#{cartView.register()}"
+							ajax="false">
+							<f:setPropertyActionListener value="true" target="#{headerView.cart}"></f:setPropertyActionListener>
+							</p:commandButton>
+					</p:row>
+				</p:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

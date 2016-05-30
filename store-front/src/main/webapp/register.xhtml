@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="./template.xhtml">
+		<ui:define name="body">
+			<h:form id="register">
+				<p:dataTable var="order" value="#{headerView.orders}"
+					style="width:350px" id="cartTable">
+
+					<!-- 画像 -->
+					<p:column colspan="2" width="35" headerText="画像">
+						<p:graphicImage name="#{order.book.id}.jpg" library="images"
+							width="30" />
+					</p:column>
+
+					<!-- タイトル -->
+					<p:column width="120" headerText="タイトル">
+						<h:outputText value="#{order.book.title}"></h:outputText>
+					</p:column>
+
+					<!-- 購入数 -->
+					<p:column width="20" headerText="数">
+						<h:outputText value="#{order.count}冊"></h:outputText>
+					</p:column>
+
+					<!-- 削除ボタン -->
+					<p:column width="60" headerText="削除">
+						<p:commandButton value="削除する" ajax="false"
+							update=":search:cartTable" action="#{headerView.removeOrder()}">
+							<f:setPropertyActionListener value="#{order}"
+								target="#{headerView.orderLine}"></f:setPropertyActionListener>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+
+				<p:commandButton value="購入する" action="#{registerView.success}"
+					ajax="false"></p:commandButton>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

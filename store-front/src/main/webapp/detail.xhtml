@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="./template.xhtml">
+		<ui:define name="body">
+			<h:form id="detail">
+				<!-- PanelGrid -->
+				<p:panelGrid id="detailGrid" styleClass="center">
+
+					<!-- Header -->
+					<f:facet name="header">
+						<p:row>
+							<p:column colspan="4">
+								<h:outputText value="#{detailView.book.title}"></h:outputText>
+							</p:column>
+						</p:row>
+					</f:facet>
+					<p:row>
+						<p:column rowspan="7">
+							<p:graphicImage name="#{detailView.book.id}.jpg" library="images"
+								width="200" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>詳細</p:column>
+						<p:column width="100">
+							<h:outputText value="#{detailView.book.description}" style="text-align:left !important;"></h:outputText>
+						</p:column>
+						<p:column rowspan="7">
+							<p:spinner value="#{detailView.count}"
+								max="#{detailView.book.stock}" min="0"></p:spinner>
+							<p:commandButton value="カートに入れる" action="#{detailView.cart()}" ajax="false">
+							</p:commandButton>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>在庫</p:column>
+						<p:column>
+							<h:outputText value="#{detailView.book.stock}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>価格</p:column>
+						<p:column>
+							<h:outputText value="\\#{detailView.book.price}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>ISBN</p:column>
+						<p:column>
+							<h:outputText value="#{detailView.book.isbn}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>著者</p:column>
+						<p:column>
+							<ui:repeat var="author" value="#{detailView.book.authors.authors}">
+								<h:outputText value="#{author.name}">
+								</h:outputText>
+							</ui:repeat>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>出版社</p:column>
+						<p:column>
+							<h:outputText value="#{detailView.book.publisher.name}"></h:outputText>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

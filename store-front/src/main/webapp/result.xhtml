@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="./template.xhtml">
+		<ui:define name="body">
+			<h:form id="result">
+				<!-- DataGridを表示 -->
+				<p:dataGrid var="book" value="#{resultView.books}" columns="2"
+					layout="grid" rows="8" paginator="true" id="books"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="4,8,16">
+
+					<!-- 検索結果 -->
+					<f:facet name="header">検索結果</f:facet>
+
+					<p:panel header="#{book.title}" style="text-align:left">
+						<p:panelGrid style="width:100%">
+							<p:row>
+								<p:column rowspan="6" width="120" resizable="false">
+									<p:graphicImage name="#{book.id}.jpg" library="images" width="100"/>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column width="300">
+									<h:outputText value="タイトル : #{book.title}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputText value="出版日 : #{book.year}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputText value="在庫数 : #{book.stock}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputText value="ISBN : #{book.isbn}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:commandButton value="カートに入れる" action="#{resultView.detail}" ajax="false">
+										<f:setPropertyActionListener value="#{book}"
+											target="#{resultView.book}" />
+									</p:commandButton>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column colspan="2">
+									<p:commandLink update=":result:bookDetail"
+										oncomplete="PF('bookDialog').show()" title="本の詳細">
+										<h:outputText styleClass="ui-icon ui-icon-search"
+											style="margin:0 auto;" />
+										<f:setPropertyActionListener value="#{book}"
+											target="#{resultView.book}" />
+									</p:commandLink>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:panel>
+				</p:dataGrid>
+
+				<!-- 本を選択した際に表示されるオーバーパネル -->
+				<p:dialog header="本の情報" widgetVar="bookDialog" modal="true"
+					showEffect="fade" hideEffect="fade" resizable="false">
+					<p:outputPanel id="bookDetail" style="text-align:center;">
+						<p:panelGrid columns="2" columnClasses="label,value">
+							<p:graphicImage name="#{resultView.book.id}.jpg"
+								library="images" />
+
+							<h:outputText value="タイトル:" />
+							<h:outputText value="#{resultView.book.title}" />
+
+							<h:outputText value="価格:" />
+							<h:outputText value="$#{resultView.book.price}" />
+
+							<h:outputText value="詳細" />
+							<h:outputText value="$#{resultView.book.description}" />
+						</p:panelGrid>
+					</p:outputPanel>
+				</p:dialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

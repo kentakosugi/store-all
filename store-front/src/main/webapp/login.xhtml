@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="./template.xhtml">
+		<ui:define name="body">
+			<h:form id="login">
+				<!-- PanelGrid -->
+				<div>
+					<h:outputText value="ID:"></h:outputText>
+					<p:inputText value="#{headerView.id}"></p:inputText>
+					<p:spacer width="20"></p:spacer>
+					<h:outputText value="パスワード:"></h:outputText>
+					<p:password value="#{headerView.password}"
+						requiredMessage="パスワードは必須です。" feedback="true"
+						promptLabel="入力して下さい" weakLabel="パスワード強度：弱い"
+						goodLabel="パスワード強度：普通" strongLabel="パスワード強度：強い"></p:password>
+				</div>
+				<p:spacer height="20"></p:spacer>
+				<p:commandButton value="サインイン" action="#{headerView.login}"
+					ajax="false"></p:commandButton>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

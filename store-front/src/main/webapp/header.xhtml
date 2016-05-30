@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<!-- 検索画面 -->
+	<h:form id="search">
+		<!-- 画像 -->
+		<h:outputLink value="index.xhtml">
+			<p:graphicImage library="images" name="techmatrix.png"
+				style="border:0" />
+		</h:outputLink>
+
+		<!-- ツールバー -->
+		<p:toolbar id="tb" style="">
+			<f:facet name="left">
+				<!-- 検索テキスト -->
+				<p:inputText id="keyword" size="50" value="#{headerView.title}" />
+				<p:watermark for="keyword" value="検索したい本を入力してください" id="watermark" />
+
+				<!-- 検索ボタン -->
+				<p:commandButton value="検索" action="#{headerView.search()}"
+					icon="ui-icon-search" ajax="false">
+				</p:commandButton>
+
+				<!-- カートボタン -->
+				<p:commandButton value="#{headerView.orders.size()}"
+					styleClass="cart" ajax="true" id="imageBtn"
+					action="#{headerView.register}"></p:commandButton>
+
+				<!-- カートボタン押下後表示する箇所 -->
+				<p:overlayPanel id="imagePanel" for="imageBtn" hideEffect="fade"
+					rendered="#{not empty headerView.orders}" showEvent="mouseover"
+					hideEvent="mousedown">
+					<p:dataTable var="order" value="#{headerView.orders}"
+						style="width:350px" id="cartTable">
+
+						<!-- 画像 -->
+						<p:column colspan="2" width="35" headerText="画像">
+							<p:graphicImage name="#{order.book.id}.jpg" library="images"
+								width="30" />
+						</p:column>
+
+						<!-- タイトル -->
+						<p:column width="120" headerText="タイトル">
+							<h:outputText value="#{order.book.title}"></h:outputText>
+						</p:column>
+
+						<!-- 購入数 -->
+						<p:column width="20" headerText="数">
+							<h:outputText value="#{order.count}冊"></h:outputText>
+						</p:column>
+
+						<!-- 削除ボタン -->
+						<p:column width="60" headerText="削除">
+							<p:commandButton value="削除する" ajax="false"
+								update=":search:cartTable" action="#{headerView.removeOrder()}">
+								<f:setPropertyActionListener value="#{order}"
+									target="#{headerView.orderLine}"></f:setPropertyActionListener>
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+					<!-- スペース -->
+					<p:spacer height="20"></p:spacer>
+
+					<h:outputText
+						value="小計(#{headerView.orders.size()}点):#{headerView.total()}円"></h:outputText>
+
+					<!-- 購入手続きボタン -->
+					<p:commandButton value="購入手続きを進める"
+						action="#{headerView.register()}" ajax="false" styleClass="right"></p:commandButton>
+				</p:overlayPanel>
+
+				<!-- ログインしている場合 -->
+				<h:outputText value="#{headerView.user.id}さん"
+					rendered="#{not empty headerView.user}"></h:outputText>
+
+				<!-- ログインしていない場合 -->
+				<p:commandButton value="サインイン"
+					rendered="#{empty headerView.user}" action="#{headerView.headerLogin}"
+					ajax="false">
+				</p:commandButton>
+			</f:facet>
+		</p:toolbar>
+
+		<!-- Sticky -->
+		<p:sticky target="tb" />
+
+	</h:form>
+	<p:spacer height="20"></p:spacer>
+</ui:composition>
+
+</html>
