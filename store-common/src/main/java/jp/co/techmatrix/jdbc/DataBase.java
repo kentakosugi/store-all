@@ -69,22 +69,22 @@ public class DataBase implements Closeable{
 		}
 		finally{
 			// ResultSetのクローズ
-			if(rs != null){
-				try{
-					rs.close();
-				}catch(SQLException e){
-					e.printStackTrace();
-				}
-			}
+//			if(rs != null){
+//				try{
+//					rs.close();
+//				}catch(SQLException e){
+//					e.printStackTrace();
+//				}
+//			}
 			
 			// Statementのクローズ
-			if(stmt != null){
-				try{
-					stmt.close();
-				}catch(SQLException e){
-					e.printStackTrace();
-				}
-			}
+//			if(stmt != null){
+//				try{
+//					stmt.close();
+//				}catch(SQLException e){
+//					e.printStackTrace();
+//				}
+//			}
 		}
 		
 		return ret;
