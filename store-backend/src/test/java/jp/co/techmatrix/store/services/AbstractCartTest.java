@@ -1,5 +1,9 @@
 package jp.co.techmatrix.store.services;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -27,7 +31,13 @@ public class AbstractCartTest{
 		Class<AbstractCart> c = AbstractCart.class;
 		Field f = c.getDeclaredField("em");
 		f.setAccessible(true);
+				
+		// EMF
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookstore_test");
 		
+		EntityManager em = emf.createEntityManager();
+		
+		f.set(target, em);
 	}
 
 	@AfterClass
@@ -36,11 +46,6 @@ public class AbstractCartTest{
 
 	@Before
 	public void setUp() throws Exception{
-		// EMF
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookstore_test");
-		
-		EntityManager em = emf.createEntityManager();
-		List<Book> books = target.getItemByTitle("java");
 	}
 
 	@After
@@ -49,7 +54,12 @@ public class AbstractCartTest{
 
 	@Test
 	public void test(){
+		Book book = target.getItemById(1);
 		
+		// harmcast構文
+		assertThat(book.getId(), is(equalTo(1)));
+		assertThat(book.getTitle(), is(equalTo("Java EE 7徹底入門 標準Javaフレームワークによる高信頼性Webシステムの構築")));
+		assertThat(book.getIsbn(), is(equalTo("111111111111")));
 	}
 
 }
