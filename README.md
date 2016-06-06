@@ -21,4 +21,4 @@
 * Servlet
 * BeanValidation
 
-JSPは古い技術なので利用していません。
+JSPはJtest10.Xで解析できないため使用していません。
