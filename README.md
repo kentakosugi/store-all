@@ -18,4 +18,7 @@
 * EJB
 * JAXB
 * CDI
+* Servlet
 * BeanValidation
+
+JSPは古い技術なので利用していません。
