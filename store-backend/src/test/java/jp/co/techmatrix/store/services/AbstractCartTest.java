@@ -59,7 +59,7 @@ public class AbstractCartTest{
 		// harmcast構文
 		assertThat(book.getId(), is(equalTo(1)));
 		assertThat(book.getTitle(), is(equalTo("Java EE 7徹底入門 標準Javaフレームワークによる高信頼性Webシステムの構築")));
-		assertThat(book.getIsbn(), is(equalTo("111111111111")));
+		assertThat(book.getIsbn(), is(equalTo("4798140929")));
 	}
 
 }
